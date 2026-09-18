@@ -1,5 +1,13 @@
 import type {AgentSpec,BuilderSession,CatalogModel,ChatTurn,Health,RunResult,Trace,Validation} from './types'
-const BASE=import.meta.env.VITE_API_URL||'http://localhost:8000/api'
+
+/** URL base de la API; en Vercel debe ser `https://<tu-api>.onrender.com/api` (con `/api`). */
+export function resolveApiBase(): string {
+  const raw = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').trim().replace(/\/$/, '')
+  if (raw.endsWith('/api')) return raw
+  return `${raw}/api`
+}
+
+const BASE = resolveApiBase()
 export class ApiError extends Error{constructor(message:string,public code='API_ERROR'){super(message)}}
 async function request<T>(path:string,options?:RequestInit):Promise<T>{
   let response:Response

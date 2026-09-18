@@ -32,7 +32,9 @@ npm run dev
 
 1. Importar repo [bia-agent-platform-web](https://github.com/Jean-Paul-12/bia-agent-platform-web).
 2. Framework: Vite · Build: `npm run build` · Output: `dist`
-3. Variable: `VITE_API_URL=https://<tu-api-en-render>.onrender.com/api`
+3. Variable (**obligatoria**, se embebe en el build):  
+   `VITE_API_URL=https://bia-agent-platform-api.onrender.com/api`  
+   Debe terminar en **`/api`**. Sin esta variable, el front apunta a `localhost`.
 4. Tras el deploy, actualizar `FRONTEND_ORIGIN` en Render con la URL de Vercel.
 
 ## Build

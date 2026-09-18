@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import {Activity,Blocks,Bot,ChevronRight,Database,Home,Plus,ShieldCheck,Sparkles,WifiOff,X,AlertTriangle} from 'lucide-react'
 import type {LucideIcon} from 'lucide-react'
-import {api} from './api'
+import {api, resolveApiBase} from './api'
 import type {AgentSpec,Health,Trace,View} from './types'
 import {AgentChatView} from './AgentChatView'
 import {AgentsAdmin} from './AgentsAdmin'
@@ -49,5 +49,5 @@ export default function App(){
  function openAgentChat(agent:AgentSpec,allowDraft:boolean){setChatSession({agentId:agent.id,allowDraft});setView('agent-chat')}
  const chatAgent=chatSession?agents.find(a=>a.id===chatSession.agentId):undefined
  function leaveChat(){setChatSession(null);setView('agents')}
- return <div className="app"><Sidebar view={view==='agent-chat'?'agents':view} setView={v=>{setChatSession(null);setView(v)}}/><main><Header view={view} health={health} subtitle={view==='agent-chat'?chatAgent?.name:undefined}/>{offline&&<ErrorBox error="Backend desconectado. Inicia FastAPI en http://localhost:8000 y recarga la página."/>}<div className="content">{view==='dashboard'&&<Dashboard agents={agents} traces={traces} setView={setView}/>} {view==='builder'&&<VoltForgeBuilder refresh={load} onTrace={openTrace} onOpenAgentChat={openAgentChat}/>} {view==='agents'&&<AgentsAdmin agents={agents} refresh={load} onCreate={()=>setView('builder')} onOpenChat={openAgentChat}/>} {view==='agent-chat'&&chatAgent&&chatSession&&<AgentChatView agent={chatAgent} allowDraft={chatSession.allowDraft} onBack={leaveChat} onTrace={openTrace}/>} {view==='agent-chat'&&!chatAgent&&<Empty text="Agente no encontrado. Vuelve al listado."/>} {view==='traces'&&<TracesView traces={traces} selected={selected} setSelected={setSelected}/>}</div></main></div>
+ return <div className="app"><Sidebar view={view==='agent-chat'?'agents':view} setView={v=>{setChatSession(null);setView(v)}}/><main><Header view={view} health={health} subtitle={view==='agent-chat'?chatAgent?.name:undefined}/>{offline&&<ErrorBox error={`No hay conexión con la API (${resolveApiBase()}). En Vercel define VITE_API_URL con /api al final y vuelve a desplegar.`}/>}<div className="content">{view==='dashboard'&&<Dashboard agents={agents} traces={traces} setView={setView}/>} {view==='builder'&&<VoltForgeBuilder refresh={load} onTrace={openTrace} onOpenAgentChat={openAgentChat}/>} {view==='agents'&&<AgentsAdmin agents={agents} refresh={load} onCreate={()=>setView('builder')} onOpenChat={openAgentChat}/>} {view==='agent-chat'&&chatAgent&&chatSession&&<AgentChatView agent={chatAgent} allowDraft={chatSession.allowDraft} onBack={leaveChat} onTrace={openTrace}/>} {view==='agent-chat'&&!chatAgent&&<Empty text="Agente no encontrado. Vuelve al listado."/>} {view==='traces'&&<TracesView traces={traces} selected={selected} setSelected={setSelected}/>}</div></main></div>
 }
