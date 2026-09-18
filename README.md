@@ -1,6 +1,15 @@
 # Bia Agent Platform — Web
 
-React + Vite + TypeScript. Agent Builder (Volt Forge), agentes, chat y trazas.
+Interfaz para Agent Builder (Volt Forge), administración de agentes, chat y trazas.
+
+## Stack (frontend)
+
+- **UI:** React 18, TypeScript, Vite  
+- **Estilo:** CSS propio (tema oscuro Bia Energy), sin UI kit pesado  
+- **Iconos:** Lucide React  
+- **Cliente API:** `fetch` + tipos compartidos (`src/api.ts`, `src/types.ts`)  
+- **Vistas:** Dashboard, Agent Builder (guiado / experto), Agentes (CRUD, publicar, chat), Trazas  
+- **Config:** variables `VITE_*` (p. ej. `VITE_API_URL` hacia la API en Render o local)
 
 ## Local
 
